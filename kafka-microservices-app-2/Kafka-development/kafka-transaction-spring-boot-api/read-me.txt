@@ -1,0 +1,49 @@
+1. Start All 3 Kafka servers.
+2. mvn clean install the Common module.
+3. Clean and build other 4 services
+4. Run the application in order:
+   a. Mock Service
+   b. Transfer Service
+   c. Deposit Service
+   d. Withdraw Service
+5.  After all the servers are started, you can use Postman or any REST client to test the endpoints.
+    curl --location 'http://localhost:9502/transfers' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "senderId": "125",
+        "recepientId": "126",
+        "amount": 125
+    }'
+6.  Check the logs for Transfer service, both the deposit and withdraw services should have processedthe requests.
+
+    2026-01-28T15:33:43.735+05:30  INFO 88376 --- [transfer-service] [nio-9502-exec-2] c.o.t.service.TransferServiceImpl        : Sent event to withdrawal topic.
+    2026-01-28T15:33:43.834+05:30  INFO 88376 --- [transfer-service] [nio-9502-exec-2] c.o.t.service.TransferServiceImpl        : Received response from mock service: 200
+    2026-01-28T15:33:43.836+05:30  INFO 88376 --- [transfer-service] [nio-9502-exec-2] c.o.t.service.TransferServiceImpl        : Sent event to deposit topic
+
+7. You can also verify both the topics.
+
+    ./bin/kafka-console-consumer.sh --topic withdraw-money-topic  --bootstrap-server localhost:9092 --from-beginning
+    {"senderId":"123","recepientId":"124","amount":123}
+
+    ./bin/kafka-console-consumer.sh --topic deposit-money-topic  --bootstrap-server localhost:9092 --from-beginning
+    {"senderId":"123","recepientId":"124","amount":123}
+
+8. Now, you can stop the Mock service and hit the request from postman on step 5. Exception will be thrown and message won't be sent to both the topics.
+
+9. you can verify the logs and kafa topics.
+
+    ./bin/kafka-console-consumer.sh \
+      --topic withdraw-money-topic \
+      --bootstrap-server localhost:9092 \
+      --from-beginning \
+      --consumer-property isolation.level=read_committed
+
+    {"senderId":"123","recepientId":"124","amount":123}
+
+    ./bin/kafka-console-consumer.sh \
+          --topic deposit-money-topic \
+          --bootstrap-server localhost:9092 \
+          --from-beginning \
+          --consumer-property isolation.level=read_committed
+
+    {"senderId":"123","recepientId":"124","amount":123}

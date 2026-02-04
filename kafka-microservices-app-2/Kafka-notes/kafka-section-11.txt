@@ -1,0 +1,32 @@
+Send Invalid Message to Dead Topic
+------------------------------------
+
+# Produce invalid message to the topic 
+
+./bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic product-created-events-topic --property "parse.key=true" --property "key.separator=:"
+>1:{aererer}
+>2:{abcdef}
+>3:{dfdere}
+>4:{adfdf}
+>5:{fdrer}
+>8:{erer}
+>9:{erer}
+
+
+# Consume the message from that topic 
+./bin/kafka-console-consumer.sh --topic product-created-events-topic --bootstrap-server localhost:9092
+
+{"product":{"price":1500,"productId":"9f90e554-a44b-4e86-b94e-79e91e8bf76c","quantity":15,"title":"iPhone 20"}}
+{"product":{"price":1500,"productId":"11c4ac49-0cfd-44c9-b382-94fb2174a244","quantity":15,"title":"iPhone 20"}}
+
+
+# Consume the message from dead topic 
+
+./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic product-created-events-topic-dlt --from-beginning --property print.key=true --property print.value=true 
+
+2	"e2FiY2RlZn0="
+3	"e2RmZGVyZX0="
+5	"e2ZkcmVyfQ=="
+8	"e2VyZXJ9"
+4	"e2FkZmRmfQ=="
+9	"e2VyZXJ9"

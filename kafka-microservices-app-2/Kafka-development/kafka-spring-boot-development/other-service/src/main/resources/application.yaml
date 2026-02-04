@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: other-service
+
+server:
+  port: 8083

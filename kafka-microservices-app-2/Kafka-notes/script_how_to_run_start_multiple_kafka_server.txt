@@ -1,0 +1,5 @@
+# MacOS
+python3 script_start_multiple_kafka_server.py /Users/ashish/Desktop/Tools/kafka
+
+# Windows
+py .\start_3_kafka.py C:\Tools\kafka

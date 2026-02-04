@@ -1,0 +1,33 @@
+# Start all 3 Kafka server from 1-kafka-notes.txt file
+
+# Create kafka topic topic2
+
+kafka % ./bin/kafka-topics.sh --create --topic topic2 --partitions 3 --replication-factor 3 --bootstrap-server localhost:9092 --config min.insync.replicas=3
+
+Created topic topic2.
+
+# Describe the topic
+ kafka %  ./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092
+Topic: topic2	TopicId: rJ18lLJASOOov-RFx7gc1A	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=2,segment.bytes=1073741824
+	Topic: topic2	Partition: 0	Leader: 1	Replicas: 1,2,3	Isr: 1,2,3	Elr: 	LastKnownElr: 
+	Topic: topic2	Partition: 1	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1	Elr: 	LastKnownElr: 
+	Topic: topic2	Partition: 2	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+
+# Cosnume from Topic
+./bin/kafka-console-consumer.sh --topic topic2 --bootstrap-server localhost:9092
+
+{"product":{"price":1500,"productId":"a510cd86-d6d0-4cb6-8fb1-6a5e75d3fd92","quantity":15,"title":"iPhone 14"}}
+
+# Change the topic name to topic2 in spring boot and run the application.
+    From postman hit the curl or endpoint.
+# NOTE: min.insync.replicas=2; that means at least 2 kafka server must be up and running. else not able to consume the message and error message will be shown like this.
+#      
+    '
+        curl --location 'http://localhost:59880/products' \
+            --header 'Content-Type: application/json' \
+            --data '{
+                "title": "iPhone 14",
+                "price": 1500,
+                "quantity": 15
+        }'
+    '

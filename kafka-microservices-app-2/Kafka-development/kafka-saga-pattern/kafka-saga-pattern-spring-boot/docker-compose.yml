@@ -1,0 +1,57 @@
+services:
+  kafka-1:
+    image: 'apache/kafka:4.0.0'
+    hostname: kafka-1
+    environment:
+      - KAFKA_NODE_ID=1
+      - KAFKA_PROCESS_ROLES=broker,controller
+      - KAFKA_CLUSTER_ID=r4zt_wrqTRuT7W2NJsB_GA
+      - KAFKA_LOG_DIRS=/var/lib/kafka/data
+      - KAFKA_LISTENERS=PLAINTEXT://:9192,CONTROLLER://:9094,EXTERNAL://:9091
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9192,EXTERNAL://localhost:9091
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9094,2@kafka-2:9094,3@kafka-3:9094
+    ports:
+      - 9091:9091
+    volumes:
+      - ../kafka-volumes/server-1:/var/lib/kafka/data
+
+  kafka-2:
+    image: 'apache/kafka:4.0.0'
+    hostname: kafka-2
+    environment:
+      - KAFKA_NODE_ID=2
+      - KAFKA_PROCESS_ROLES=broker,controller
+      - KAFKA_CLUSTER_ID=r4zt_wrqTRuT7W2NJsB_GA
+      - KAFKA_LOG_DIRS=/var/lib/kafka/data
+      - KAFKA_LISTENERS=PLAINTEXT://:9192,CONTROLLER://:9094,EXTERNAL://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-2:9192,EXTERNAL://localhost:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9094,2@kafka-2:9094,3@kafka-3:9094
+    ports:
+      - 9092:9092
+    volumes:
+      - ../kafka-volumes/server-2:/var/lib/kafka/data
+
+  kafka-3:
+    image: 'apache/kafka:4.0.0'
+    hostname: kafka-3
+    environment:
+      - KAFKA_NODE_ID=3
+      - KAFKA_PROCESS_ROLES=broker,controller
+      - KAFKA_CLUSTER_ID=r4zt_wrqTRuT7W2NJsB_GA
+      - KAFKA_LOG_DIRS=/var/lib/kafka/data
+      - KAFKA_LISTENERS=PLAINTEXT://:9192,CONTROLLER://:9094,EXTERNAL://:9093
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-3:9192,EXTERNAL://localhost:9093
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9094,2@kafka-2:9094,3@kafka-3:9094
+    ports:
+      - 9093:9093
+    volumes:
+      - ../kafka-volumes/server-3:/var/lib/kafka/data

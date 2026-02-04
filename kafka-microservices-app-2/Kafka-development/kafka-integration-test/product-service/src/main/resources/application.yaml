@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: product-service
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092,localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+
+
+      properties:
+#        retry.backoff.ms: 1000
+        delivery.timeout.ms: 120000
+        linger.ms: 0
+        request.timeout.ms: 30000
+        # To make idempotent all 3 properties must be set
+        # acks: all, retries: >0, and max.in.flight.requests.per.connection: <=5
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+      acks: all
+      retries: 10
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+logging:
+  level:
+    root: INFO
+    com.mydomain.ws: DEBUG

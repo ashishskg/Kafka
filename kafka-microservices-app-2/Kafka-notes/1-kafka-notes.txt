@@ -1,0 +1,48 @@
+# Start Multiple Kafka Server Till Command (./bin/kafka-server-start.sh config/server-3.properties)
+./bin/kafka-server-stop.sh
+rm -rf /tmp/server-1 /tmp/server-2 /tmp/server-3
+export CLUSTER_ID=$(./bin/kafka-storage.sh random-uuid)
+echo $CLUSTER_ID
+DIR1=$(./bin/kafka-storage.sh random-uuid)
+DIR2=$(./bin/kafka-storage.sh random-uuid)
+DIR3=$(./bin/kafka-storage.sh random-uuid)
+echo $DIR1 $DIR2 $DIR3
+
+ # Format the storage directories for each broker with the cluster ID and initial controller quorum
+./bin/kafka-storage.sh format -t "$CLUSTER_ID" -c config/server-1.properties --initial-controllers "1@localhost:9093:$DIR1,2@localhost:9095:$DIR2,3@localhost:9097:$DIR3"
+./bin/kafka-storage.sh format -t "$CLUSTER_ID" -c config/server-2.properties --initial-controllers "1@localhost:9093:$DIR1,2@localhost:9095:$DIR2,3@localhost:9097:$DIR3"
+./bin/kafka-storage.sh format -t "$CLUSTER_ID" -c config/server-3.properties --initial-controllers "1@localhost:9093:$DIR1,2@localhost:9095:$DIR2,3@localhost:9097:$DIR3"
+ 
+ # Start the servers in 3 different terminal
+./bin/kafka-server-start.sh config/server-1.properties
+./bin/kafka-server-start.sh config/server-2.properties
+./bin/kafka-server-start.sh config/server-3.properties
+
+./bin/kafka-metadata-quorum.sh --bootstrap-controller localhost:9093 describe --status
+# Create topic1, and topic2
+% ./bin/kafka-topics.sh --create --topic topic1 --partitions 3  --replication-factor 3 --bootstrap-server localhost:9092,localhost:9094
+# Created topic topic1.
+% ./bin/kafka-topics.sh --create --topic topic2 --partitions 3  --replication-factor 3 --bootstrap-server localhost:9092,localhost:9094
+# Created topic topic2.
+
+# List topics
+% ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+# topic1
+# topic2
+
+# Describe topics
+% ./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092
+# Topic: topic1	TopicId: OqqzcQC0TRmIoeM5wNBodQ	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=1,segment.bytes=1073741824
+# 	Topic: topic1	Partition: 0	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+# 	Topic: topic1	Partition: 1	Leader: 1	Replicas: 1,2,3	Isr: 1,2,3	Elr: 	LastKnownElr: 
+# 	Topic: topic1	Partition: 2	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1	Elr: 	LastKnownElr: 
+# Topic: topic2	TopicId: 0bv6XEOsQzilEIbagAOeyg	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=1,segment.bytes=1073741824
+# 	Topic: topic2	Partition: 0	Leader: 1	Replicas: 1,2,3	Isr: 1,2,3	Elr: 	LastKnownElr: 
+# 	Topic: topic2	Partition: 1	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1	Elr: 	LastKnownElr: 
+# 	Topic: topic2	Partition: 2	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+
+# Delete topic2
+kafka % ./bin/kafka-topics.sh --delete --topic topic2 --bootstrap-server localhost:9092
+kafka % ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092             
+# topic1
+

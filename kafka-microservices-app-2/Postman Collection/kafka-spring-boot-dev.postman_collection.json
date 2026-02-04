@@ -1,0 +1,222 @@
+{
+  "info": {
+    "_postman_id": "83314438-4dfc-438f-9078-cc9d0bff7df3",
+    "name": "kafka-spring-boot-dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26162897"
+  },
+  "item": [
+    {
+      "name": "Transaction",
+      "item": [
+        {
+          "name": "Create Transfer",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"senderId\": \"123\",\n    \"recepientId\": \"124\",\n    \"amount\": 123\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9502/transfers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9502",
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Saga_Design_Pattern",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"iphone 10\",\n    \"price\": 1200,\n    \"quantity\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"6d75b683-fa36-406f-9c7b-f5d863394007\",\n    \"productQuantity\": 1,\n    \"customerId\": \"6d75b683-fa36-406f-9c7b-f5d863390000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Order History By Order Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\": \"6d75b683-fa36-406f-9c7b-f5d863394007\",\n    \"productQuantity\": 1,\n    \"customerId\": \"6d75b683-fa36-406f-9c7b-f5d863390000\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/orders/c1b920bd-2e89-461a-9573-024c606c602e/history",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "orders",
+                "c1b920bd-2e89-461a-9573-024c606c602e",
+                "history"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"iPhone 56\",\n    \"price\": 1500,\n    \"quantity\": 15\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get response 200",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"iPhone 56\",\n    \"price\": 1500,\n    \"quantity\": 15\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/response/200",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "response",
+            "200"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get response 500",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"iPhone 56\",\n    \"price\": 1500,\n    \"quantity\": 15\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/response/500",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "response",
+            "500"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}

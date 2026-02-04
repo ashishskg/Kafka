@@ -1,0 +1,1788 @@
+MacBook-Pro kafka-saga-pattern % tree
+.
+├── kafka-saga-pattern-spring-boot
+│   ├── common
+│   │   ├── HELP.md
+│   │   ├── mvnw
+│   │   ├── mvnw.cmd
+│   │   ├── pom.xml
+│   │   ├── src
+│   │   │   └── main
+│   │   │       └── java
+│   │   │           └── com
+│   │   │               └── org
+│   │   │                   └── common
+│   │   │                       ├── dto
+│   │   │                       │   ├── commands
+│   │   │                       │   │   ├── ApproveOrderCommand.java
+│   │   │                       │   │   ├── ProcessPaymentCommand.java
+│   │   │                       │   │   └── ReserveProductCommand.java
+│   │   │                       │   ├── CreditCardProcessRequest.java
+│   │   │                       │   ├── event
+│   │   │                       │   │   ├── OrderApprovedEvent.java
+│   │   │                       │   │   ├── OrderCreatedEvent.java
+│   │   │                       │   │   ├── PaymentFailedEvent.java
+│   │   │                       │   │   ├── PaymentProcessEvent.java
+│   │   │                       │   │   ├── ProductReservationFailedEvent.java
+│   │   │                       │   │   └── ProductReservedEvent.java
+│   │   │                       │   ├── Order.java
+│   │   │                       │   ├── Payment.java
+│   │   │                       │   ├── Product.java
+│   │   │                       │   └── Shipment.java
+│   │   │                       ├── exceptions
+│   │   │                       │   ├── CreditCardProcessorUnavailableException.java
+│   │   │                       │   └── ProductInsufficientQuantityException.java
+│   │   │                       └── types
+│   │   │                           └── OrderStatus.java
+│   │   └── target
+│   │       ├── classes
+│   │       │   └── com
+│   │       │       └── org
+│   │       │           └── common
+│   │       │               ├── dto
+│   │       │               │   ├── commands
+│   │       │               │   │   ├── ApproveOrderCommand.class
+│   │       │               │   │   ├── ProcessPaymentCommand.class
+│   │       │               │   │   └── ReserveProductCommand.class
+│   │       │               │   ├── CreditCardProcessRequest.class
+│   │       │               │   ├── event
+│   │       │               │   │   ├── OrderApprovedEvent.class
+│   │       │               │   │   ├── OrderCreatedEvent.class
+│   │       │               │   │   ├── PaymentFailedEvent.class
+│   │       │               │   │   ├── PaymentProcessEvent.class
+│   │       │               │   │   ├── ProductReservationFailedEvent.class
+│   │       │               │   │   └── ProductReservedEvent.class
+│   │       │               │   ├── Order.class
+│   │       │               │   ├── Payment.class
+│   │       │               │   ├── Product.class
+│   │       │               │   └── Shipment.class
+│   │       │               ├── exceptions
+│   │       │               │   ├── CreditCardProcessorUnavailableException.class
+│   │       │               │   └── ProductInsufficientQuantityException.class
+│   │       │               └── types
+│   │       │                   └── OrderStatus.class
+│   │       ├── common-1.0.0.jar
+│   │       ├── generated-sources
+│   │       │   └── annotations
+│   │       ├── maven-archiver
+│   │       │   └── pom.properties
+│   │       └── maven-status
+│   │           └── maven-compiler-plugin
+│   │               └── compile
+│   │                   └── default-compile
+│   │                       ├── createdFiles.lst
+│   │                       └── inputFiles.lst
+│   ├── credit-card-processor-service
+│   │   ├── HELP.md
+│   │   ├── mvnw
+│   │   ├── mvnw.cmd
+│   │   ├── pom.xml
+│   │   ├── src
+│   │   │   ├── main
+│   │   │   │   ├── java
+│   │   │   │   │   └── com
+│   │   │   │   │       └── org
+│   │   │   │   │           └── creditcardprocessor
+│   │   │   │   │               ├── CreditCardProcessorServiceApplication.java
+│   │   │   │   │               └── web
+│   │   │   │   │                   └── controller
+│   │   │   │   │                       └── CreditCardProcessorController.java
+│   │   │   │   └── resources
+│   │   │   │       ├── application.yaml
+│   │   │   │       ├── static
+│   │   │   │       └── templates
+│   │   │   └── test
+│   │   │       └── java
+│   │   │           └── com
+│   │   │               └── org
+│   │   │                   └── creditcardprocessor
+│   │   │                       └── CreditCardProcessorServiceApplicationTests.java
+│   │   └── target
+│   │       ├── classes
+│   │       │   ├── application.yaml
+│   │       │   └── com
+│   │       │       └── org
+│   │       │           └── creditcardprocessor
+│   │       │               ├── CreditCardProcessorServiceApplication.class
+│   │       │               └── web
+│   │       │                   └── controller
+│   │       │                       └── CreditCardProcessorController.class
+│   │       ├── credit-card-processor-service-1.0.0.jar
+│   │       ├── credit-card-processor-service-1.0.0.jar.original
+│   │       ├── generated-sources
+│   │       │   └── annotations
+│   │       ├── generated-test-sources
+│   │       │   └── test-annotations
+│   │       ├── maven-archiver
+│   │       │   └── pom.properties
+│   │       ├── maven-status
+│   │       │   └── maven-compiler-plugin
+│   │       │       ├── compile
+│   │       │       │   └── default-compile
+│   │       │       │       ├── createdFiles.lst
+│   │       │       │       └── inputFiles.lst
+│   │       │       └── testCompile
+│   │       │           └── default-testCompile
+│   │       │               ├── createdFiles.lst
+│   │       │               └── inputFiles.lst
+│   │       ├── surefire-reports
+│   │       └── test-classes
+│   │           └── com
+│   │               └── org
+│   │                   └── creditcardprocessor
+│   │                       └── CreditCardProcessorServiceApplicationTests.class
+│   ├── docker-compose.yml
+│   ├── orders-service
+│   │   ├── HELP.md
+│   │   ├── mvnw
+│   │   ├── mvnw.cmd
+│   │   ├── pom.xml
+│   │   ├── src
+│   │   │   ├── main
+│   │   │   │   ├── java
+│   │   │   │   │   └── com
+│   │   │   │   │       └── org
+│   │   │   │   │           └── orders
+│   │   │   │   │               ├── config
+│   │   │   │   │               │   └── KafkaConfig.java
+│   │   │   │   │               ├── dao
+│   │   │   │   │               │   └── jpa
+│   │   │   │   │               │       ├── entity
+│   │   │   │   │               │       │   ├── OrderEntity.java
+│   │   │   │   │               │       │   └── OrderHistoryEntity.java
+│   │   │   │   │               │       └── repository
+│   │   │   │   │               │           ├── OrderHistoryRepository.java
+│   │   │   │   │               │           └── OrderRepository.java
+│   │   │   │   │               ├── dto
+│   │   │   │   │               │   ├── CreateOrderRequest.java
+│   │   │   │   │               │   ├── CreateOrderResponse.java
+│   │   │   │   │               │   ├── OrderHistory.java
+│   │   │   │   │               │   └── OrderHistoryResponse.java
+│   │   │   │   │               ├── OrdersServiceApplication.java
+│   │   │   │   │               ├── saga
+│   │   │   │   │               │   └── OrderSaga.java
+│   │   │   │   │               ├── service
+│   │   │   │   │               │   ├── handler
+│   │   │   │   │               │   │   └── OrdersCommandHandler.java
+│   │   │   │   │               │   ├── OrderHistoryService.java
+│   │   │   │   │               │   ├── OrderHistoryServiceImpl.java
+│   │   │   │   │               │   ├── OrderService.java
+│   │   │   │   │               │   └── OrderServiceImpl.java
+│   │   │   │   │               └── web
+│   │   │   │   │                   └── controller
+│   │   │   │   │                       └── OrdersController.java
+│   │   │   │   └── resources
+│   │   │   │       ├── application.yaml
+│   │   │   │       ├── static
+│   │   │   │       └── templates
+│   │   │   └── test
+│   │   │       └── java
+│   │   │           └── com
+│   │   │               └── org
+│   │   │                   └── orders
+│   │   │                       └── OrdersServiceApplicationTests.java
+│   │   └── target
+│   │       ├── classes
+│   │       │   ├── application.yaml
+│   │       │   └── com
+│   │       │       └── org
+│   │       │           └── orders
+│   │       │               ├── config
+│   │       │               │   └── KafkaConfig.class
+│   │       │               ├── dao
+│   │       │               │   └── jpa
+│   │       │               │       ├── entity
+│   │       │               │       │   ├── OrderEntity.class
+│   │       │               │       │   └── OrderHistoryEntity.class
+│   │       │               │       └── repository
+│   │       │               │           ├── OrderHistoryRepository.class
+│   │       │               │           └── OrderRepository.class
+│   │       │               ├── dto
+│   │       │               │   ├── CreateOrderRequest.class
+│   │       │               │   ├── CreateOrderResponse.class
+│   │       │               │   ├── OrderHistory.class
+│   │       │               │   └── OrderHistoryResponse.class
+│   │       │               ├── OrdersServiceApplication.class
+│   │       │               ├── saga
+│   │       │               │   └── OrderSaga.class
+│   │       │               ├── service
+│   │       │               │   ├── handler
+│   │       │               │   │   └── OrdersCommandHandler.class
+│   │       │               │   ├── OrderHistoryService.class
+│   │       │               │   ├── OrderHistoryServiceImpl.class
+│   │       │               │   ├── OrderService.class
+│   │       │               │   └── OrderServiceImpl.class
+│   │       │               └── web
+│   │       │                   └── controller
+│   │       │                       └── OrdersController.class
+│   │       ├── generated-sources
+│   │       │   └── annotations
+│   │       ├── generated-test-sources
+│   │       │   └── test-annotations
+│   │       ├── maven-archiver
+│   │       │   └── pom.properties
+│   │       ├── maven-status
+│   │       │   └── maven-compiler-plugin
+│   │       │       ├── compile
+│   │       │       │   └── default-compile
+│   │       │       │       ├── createdFiles.lst
+│   │       │       │       └── inputFiles.lst
+│   │       │       └── testCompile
+│   │       │           └── default-testCompile
+│   │       │               ├── createdFiles.lst
+│   │       │               └── inputFiles.lst
+│   │       ├── orders-service-1.0.0.jar
+│   │       ├── orders-service-1.0.0.jar.original
+│   │       ├── surefire-reports
+│   │       │   ├── com.org.orders.OrdersServiceApplicationTests.txt
+│   │       │   └── TEST-com.org.orders.OrdersServiceApplicationTests.xml
+│   │       └── test-classes
+│   │           └── com
+│   │               └── org
+│   │                   └── orders
+│   │                       └── OrdersServiceApplicationTests.class
+│   ├── payment-service
+│   │   ├── HELP.md
+│   │   ├── mvnw
+│   │   ├── mvnw.cmd
+│   │   ├── pom.xml
+│   │   ├── src
+│   │   │   ├── main
+│   │   │   │   ├── java
+│   │   │   │   │   └── com
+│   │   │   │   │       └── org
+│   │   │   │   │           └── payments
+│   │   │   │   │               ├── config
+│   │   │   │   │               │   ├── ApplicationConfig.java
+│   │   │   │   │               │   └── KafkaConfig.java
+│   │   │   │   │               ├── dao
+│   │   │   │   │               │   └── jpa
+│   │   │   │   │               │       ├── entity
+│   │   │   │   │               │       │   └── PaymentEntity.java
+│   │   │   │   │               │       └── repository
+│   │   │   │   │               │           └── PaymentRepository.java
+│   │   │   │   │               ├── PaymentServiceApplication.java
+│   │   │   │   │               └── service
+│   │   │   │   │                   ├── CreditCardProcessorRemoteService.java
+│   │   │   │   │                   ├── CreditCardProcessorRemoteServiceImpl.java
+│   │   │   │   │                   ├── PaymentsCommandsHandler.java
+│   │   │   │   │                   ├── PaymentService.java
+│   │   │   │   │                   └── PaymentServiceImpl.java
+│   │   │   │   └── resources
+│   │   │   │       ├── application.yaml
+│   │   │   │       ├── static
+│   │   │   │       └── templates
+│   │   │   └── test
+│   │   │       └── java
+│   │   │           └── com
+│   │   │               └── org
+│   │   │                   └── payments
+│   │   │                       └── PaymentServiceApplicationTests.java
+│   │   └── target
+│   │       ├── classes
+│   │       │   ├── application.yaml
+│   │       │   └── com
+│   │       │       └── org
+│   │       │           └── payments
+│   │       │               ├── config
+│   │       │               │   ├── ApplicationConfig.class
+│   │       │               │   └── KafkaConfig.class
+│   │       │               ├── dao
+│   │       │               │   └── jpa
+│   │       │               │       ├── entity
+│   │       │               │       │   └── PaymentEntity.class
+│   │       │               │       └── repository
+│   │       │               │           └── PaymentRepository.class
+│   │       │               ├── PaymentServiceApplication.class
+│   │       │               └── service
+│   │       │                   ├── CreditCardProcessorRemoteService.class
+│   │       │                   ├── CreditCardProcessorRemoteServiceImpl.class
+│   │       │                   ├── PaymentsCommandsHandler.class
+│   │       │                   ├── PaymentService.class
+│   │       │                   └── PaymentServiceImpl.class
+│   │       ├── generated-sources
+│   │       │   └── annotations
+│   │       ├── generated-test-sources
+│   │       │   └── test-annotations
+│   │       ├── maven-archiver
+│   │       │   └── pom.properties
+│   │       ├── maven-status
+│   │       │   └── maven-compiler-plugin
+│   │       │       ├── compile
+│   │       │       │   └── default-compile
+│   │       │       │       ├── createdFiles.lst
+│   │       │       │       └── inputFiles.lst
+│   │       │       └── testCompile
+│   │       │           └── default-testCompile
+│   │       │               ├── createdFiles.lst
+│   │       │               └── inputFiles.lst
+│   │       ├── payment-service-0.0.1-SNAPSHOT.jar
+│   │       ├── payment-service-0.0.1-SNAPSHOT.jar.original
+│   │       ├── surefire-reports
+│   │       │   ├── com.org.payments.PaymentServiceApplicationTests.txt
+│   │       │   └── TEST-com.org.payments.PaymentServiceApplicationTests.xml
+│   │       └── test-classes
+│   │           └── com
+│   │               └── org
+│   │                   └── payments
+│   │                       └── PaymentServiceApplicationTests.class
+│   ├── pom.xml
+│   └── product-service
+│       ├── HELP.md
+│       ├── mvnw
+│       ├── mvnw.cmd
+│       ├── pom.xml
+│       ├── src
+│       │   ├── main
+│       │   │   ├── java
+│       │   │   │   └── com
+│       │   │   │       └── org
+│       │   │   │           └── products
+│       │   │   │               ├── config
+│       │   │   │               │   └── KafkaConfig.java
+│       │   │   │               ├── dao
+│       │   │   │               │   └── jpa
+│       │   │   │               │       ├── entity
+│       │   │   │               │       │   └── ProductEntity.java
+│       │   │   │               │       └── repository
+│       │   │   │               │           └── ProductRepository.java
+│       │   │   │               ├── dto
+│       │   │   │               │   ├── ProductCreationRequest.java
+│       │   │   │               │   └── ProductCreationResponse.java
+│       │   │   │               ├── ProductServiceApplication.java
+│       │   │   │               ├── service
+│       │   │   │               │   ├── handler
+│       │   │   │               │   │   └── ProductCommandsHandler.java
+│       │   │   │               │   ├── ProductService.java
+│       │   │   │               │   └── ProductServiceImpl.java
+│       │   │   │               └── web
+│       │   │   │                   └── controller
+│       │   │   │                       └── ProductsController.java
+│       │   │   └── resources
+│       │   │       ├── application.yaml
+│       │   │       ├── static
+│       │   │       └── templates
+│       │   └── test
+│       │       └── java
+│       │           └── com
+│       │               └── org
+│       │                   └── products
+│       │                       └── ProductServiceApplicationTests.java
+│       └── target
+│           ├── classes
+│           │   ├── application.yaml
+│           │   └── com
+│           │       └── org
+│           │           └── products
+│           │               ├── config
+│           │               │   └── KafkaConfig.class
+│           │               ├── dao
+│           │               │   └── jpa
+│           │               │       ├── entity
+│           │               │       │   └── ProductEntity.class
+│           │               │       └── repository
+│           │               │           └── ProductRepository.class
+│           │               ├── dto
+│           │               │   ├── ProductCreationRequest.class
+│           │               │   └── ProductCreationResponse.class
+│           │               ├── ProductServiceApplication.class
+│           │               ├── service
+│           │               │   ├── handler
+│           │               │   │   └── ProductCommandsHandler.class
+│           │               │   ├── ProductService.class
+│           │               │   └── ProductServiceImpl.class
+│           │               └── web
+│           │                   └── controller
+│           │                       └── ProductsController.class
+│           ├── generated-sources
+│           │   └── annotations
+│           ├── generated-test-sources
+│           │   └── test-annotations
+│           ├── maven-archiver
+│           │   └── pom.properties
+│           ├── maven-status
+│           │   └── maven-compiler-plugin
+│           │       ├── compile
+│           │       │   └── default-compile
+│           │       │       ├── createdFiles.lst
+│           │       │       └── inputFiles.lst
+│           │       └── testCompile
+│           │           └── default-testCompile
+│           │               ├── createdFiles.lst
+│           │               └── inputFiles.lst
+│           ├── product-service-1.0.0.jar
+│           ├── product-service-1.0.0.jar.original
+│           ├── surefire-reports
+│           │   ├── com.org.products.ProductServiceApplicationTests.txt
+│           │   └── TEST-com.org.products.ProductServiceApplicationTests.xml
+│           └── test-classes
+│               └── com
+│                   └── org
+│                       └── products
+│                           └── ProductServiceApplicationTests.class
+└── kafka-volumes
+    ├── server-1
+    │   ├── __cluster_metadata-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000007243-0000000019.checkpoint
+    │   │   ├── 00000000000000028046-0000000092.checkpoint
+    │   │   ├── 00000000000000034770.snapshot
+    │   │   ├── 00000000000000042208-0000000098.checkpoint
+    │   │   ├── leader-epoch-checkpoint
+    │   │   ├── partition.metadata
+    │   │   └── quorum-state
+    │   ├── __consumer_offsets-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-10
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-11
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-12
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-13
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-14
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000007.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-15
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-16
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-17
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-18
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-19
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-20
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000048.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-21
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-22
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-23
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-24
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000006.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-25
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-26
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-27
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-28
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-29
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-3
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-30
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-31
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-32
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-33
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-34
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-35
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-36
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-37
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000033.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-38
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-39
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-4
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-40
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-41
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-42
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-43
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-44
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-45
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-46
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-47
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-48
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-49
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-5
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-6
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-7
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-8
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-9
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── bootstrap.checkpoint
+    │   ├── cleaner-offset-checkpoint
+    │   ├── log-start-offset-checkpoint
+    │   ├── meta.properties
+    │   ├── order-events-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-commands-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-commands-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-commands-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-event-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-event-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000003.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-event-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-event-topics-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-events-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000003.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-events-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-events-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000001.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── payments-commands-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── payments-commands-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── payments-commands-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-command-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-command-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-command-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000003.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-commands-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-commands-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-commands-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── recovery-point-offset-checkpoint
+    │   └── replication-offset-checkpoint
+    ├── server-2
+    │   ├── __cluster_metadata-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000007242-0000000019.checkpoint
+    │   │   ├── 00000000000000028047-0000000092.checkpoint
+    │   │   ├── 00000000000000034771.snapshot
+    │   │   ├── 00000000000000042208-0000000098.checkpoint
+    │   │   ├── leader-epoch-checkpoint
+    │   │   ├── partition.metadata
+    │   │   └── quorum-state
+    │   ├── __consumer_offsets-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-10
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-11
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-12
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-13
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-14
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000007.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-15
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-16
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-17
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-18
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-19
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-20
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000048.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-21
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-22
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-23
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-24
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000006.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-25
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-26
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-27
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-28
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-29
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-3
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-30
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-31
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-32
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-33
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-34
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-35
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-36
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-37
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000033.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-38
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-39
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-4
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-40
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-41
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-42
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-43
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-44
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-45
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-46
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-47
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-48
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-49
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-5
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-6
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-7
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-8
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000004.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── __consumer_offsets-9
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── bootstrap.checkpoint
+    │   ├── cleaner-offset-checkpoint
+    │   ├── log-start-offset-checkpoint
+    │   ├── meta.properties
+    │   ├── orders-commands-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-commands-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-commands-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-event-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-event-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000003.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-event-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-events-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000003.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-events-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── orders-events-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000001.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── payments-commands-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── payments-commands-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── payments-commands-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── payments-events-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-command-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-command-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-command-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000003.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-commands-topic-0
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-commands-topic-1
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── products-commands-topic-2
+    │   │   ├── 00000000000000000000.index
+    │   │   ├── 00000000000000000000.log
+    │   │   ├── 00000000000000000000.timeindex
+    │   │   ├── 00000000000000000002.snapshot
+    │   │   ├── leader-epoch-checkpoint
+    │   │   └── partition.metadata
+    │   ├── recovery-point-offset-checkpoint
+    │   └── replication-offset-checkpoint
+    └── server-3
+        ├── __cluster_metadata-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000007242-0000000019.checkpoint
+        │   ├── 00000000000000028046-0000000092.checkpoint
+        │   ├── 00000000000000034771.snapshot
+        │   ├── 00000000000000042209-0000000098.checkpoint
+        │   ├── leader-epoch-checkpoint
+        │   ├── partition.metadata
+        │   └── quorum-state
+        ├── __consumer_offsets-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-1
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-10
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-11
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-12
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-13
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-14
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000007.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-15
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-16
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-17
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-18
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-19
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-2
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-20
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000048.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-21
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-22
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000002.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-23
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-24
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000006.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-25
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-26
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-27
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-28
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-29
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-3
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000002.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-30
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-31
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-32
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-33
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-34
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-35
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-36
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-37
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000033.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-38
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-39
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-4
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-40
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-41
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-42
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-43
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-44
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-45
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-46
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-47
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-48
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-49
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-5
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-6
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-7
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-8
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000004.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── __consumer_offsets-9
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── bootstrap.checkpoint
+        ├── cleaner-offset-checkpoint
+        ├── log-start-offset-checkpoint
+        ├── meta.properties
+        ├── orders-commands-topic-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-commands-topic-1
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-commands-topic-2
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-event-topic-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-event-topic-1
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000003.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-event-topic-2
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-events-topic-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000003.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-events-topic-1
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── orders-events-topic-2
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000001.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── payments-commands-topic-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── payments-commands-topic-1
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── payments-commands-topic-2
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── products-command-topic-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── products-command-topic-1
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── products-command-topic-2
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000003.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── products-commands-topic-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000002.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── products-commands-topic-1
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── products-commands-topic-2
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000002.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── products-events-topic-0
+        │   ├── 00000000000000000000.index
+        │   ├── 00000000000000000000.log
+        │   ├── 00000000000000000000.timeindex
+        │   ├── 00000000000000000003.snapshot
+        │   ├── leader-epoch-checkpoint
+        │   └── partition.metadata
+        ├── recovery-point-offset-checkpoint
+        └── replication-offset-checkpoint
+
+448 directories, 1337 files

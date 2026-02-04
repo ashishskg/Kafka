@@ -1,0 +1,93 @@
+1. Start All 3 Kafka servers.
+2. mvn clean install the Common module.
+3. Clean and build other 4 services
+4. Run the application in order:
+   a. Mock Service
+   b. Transfer Service
+   c. Deposit Service
+   d. Withdraw Service
+5.  After all the servers are started, you can use Postman or any REST client to test the endpoints.
+    curl --location 'http://localhost:9502/transfers' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "senderId": "125",
+        "recepientId": "126",
+        "amount": 125
+    }'
+6.  Check the logs for Transfer service, both the deposit and withdraw services should have processedthe requests.
+
+   2026-01-29T00:03:12.570+05:30 DEBUG 131 --- [transfer-service] [nio-9502-exec-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=transfer-service-producer-1, transactionalId=transfer-service-24befd82bfaf40350acc478e110e7e8a-0] Transition from state READY to IN_TRANSACTION
+   2026-01-29T00:03:12.583+05:30  INFO 131 --- [transfer-service] [nio-9502-exec-1] c.o.t.service.TransferServiceImpl        : Sent event to withdrawal topic.
+   2026-01-29T00:03:12.586+05:30 DEBUG 131 --- [transfer-service] [vice-producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=transfer-service-producer-1, transactionalId=transfer-service-24befd82bfaf40350acc478e110e7e8a-0] ProducerId of partition withdraw-money-topic-1 set to 3001 with epoch 0. Reinitialize sequence at beginning.
+   2026-01-29T00:03:12.645+05:30  INFO 131 --- [transfer-service] [nio-9502-exec-1] c.o.t.service.TransferServiceImpl        : Received response from mock service: 200
+   2026-01-29T00:03:12.647+05:30  INFO 131 --- [transfer-service] [nio-9502-exec-1] c.o.t.service.TransferServiceImpl        : Sent event to deposit topic
+   2026-01-29T00:03:12.647+05:30 DEBUG 131 --- [transfer-service] [nio-9502-exec-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction commit
+   2026-01-29T00:03:12.647+05:30 DEBUG 131 --- [transfer-service] [vice-producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=transfer-service-producer-1, transactionalId=transfer-service-24befd82bfaf40350acc478e110e7e8a-0] ProducerId of partition deposit-money-topic-0 set to 3001 with epoch 0. Reinitialize sequence at beginning.
+   2026-01-29T00:03:12.647+05:30 DEBUG 131 --- [transfer-service] [nio-9502-exec-1] o.s.orm.jpa.JpaTransactionManager        : Committing JPA transaction on EntityManager [SessionImpl(1327506968<open>)]
+   2026-01-29T00:03:12.656+05:30 DEBUG 131 --- [transfer-service] [nio-9502-exec-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=transfer-service-producer-1, transactionalId=transfer-service-24befd82bfaf40350acc478e110e7e8a-0] Transition from state IN_TRANSACTION to COMMITTING_TRANSACTION
+   2026-01-29T00:03:12.657+05:30 DEBUG 131 --- [transfer-service] [nio-9502-exec-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=transfer-service-producer-1, transactionalId=transfer-service-24befd82bfaf40350acc478e110e7e8a-0] Enqueuing transactional request EndTxnRequestData(transactionalId='transfer-service-24befd82bfaf40350acc478e110e7e8a-0', producerId=3001, producerEpoch=0, committed=true)
+   2026-01-29T00:03:12.672+05:30 DEBUG 131 --- [transfer-service] [vice-producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=transfer-service-producer-1, transactionalId=transfer-service-24befd82bfaf40350acc478e110e7e8a-0] ProducerId set to 3001 with epoch 1
+   2026-01-29T00:03:12.672+05:30 DEBUG 131 --- [transfer-service] [vice-producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=transfer-service-producer-1, transactionalId=transfer-service-24befd82bfaf40350acc478e110e7e8a-0] Transition from state COMMITTING_TRANSACTION to READY
+   2026-01-29T00:03:12.673+05:30 DEBUG 131 --- [transfer-service] [nio-9502-exec-1] o.s.orm.jpa.JpaTransactionManager        : Not closing pre-bound JPA EntityManager after transaction
+
+
+    Deposit Service Logs:
+
+    2026-01-29T00:02:03.858+05:30  INFO 285 --- [deposit-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerUtils        : Setting offset for partition deposit-money-topic-0 to the committed offset FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null isFenced: false)], epoch=5}}
+    2026-01-29T00:02:03.859+05:30  INFO 285 --- [deposit-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerUtils        : Setting offset for partition deposit-money-topic-1 to the committed offset FetchPosition{offset=0, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9094 (id: 2 rack: null isFenced: false)], epoch=4}}
+    2026-01-29T00:02:03.859+05:30  INFO 285 --- [deposit-service] [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerUtils        : Setting offset for partition deposit-money-topic-2 to the committed offset FetchPosition{offset=1, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9096 (id: 3 rack: null isFenced: false)], epoch=2}}
+    2026-01-29T00:02:03.859+05:30  INFO 285 --- [deposit-service] [ntainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : amount-deposit-event: partitions assigned: [deposit-money-topic-0, deposit-money-topic-1, deposit-money-topic-2]
+    2026-01-29T00:03:12.704+05:30  INFO 285 --- [deposit-service] [ntainer#0-0-C-1] c.o.d.h.DepositRequestedEventHandler     : Received deposit event: com.org.common.events.DepositRequestedEvent@691b2da4
+
+    Withdraw Service Logs:
+
+    2026-01-29T00:08:37.308+05:30  INFO 514 --- [withdrawl-service] [ntainer#0-0-C-1] c.o.w.h.WithdrawalRequestedEventHandler  : Received a new withdrawal event: 20005
+
+
+7. You can also verify both the topics.
+
+    ./bin/kafka-console-consumer.sh --topic withdraw-money-topic  --bootstrap-server localhost:9092 --from-beginning
+    {"senderId":"123","recepientId":"124","amount":123}
+
+    ./bin/kafka-console-consumer.sh --topic deposit-money-topic  --bootstrap-server localhost:9092 --from-beginning
+    {"senderId":"123","recepientId":"124","amount":123}
+
+8. you can verify the logs and kafa topics.
+
+    ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-consumer.sh \
+      --topic withdraw-money-topic \
+      --bootstrap-server localhost:9092 \
+      --from-beginning \
+      --consumer-property isolation.level=read_committed
+    {"senderId":"123","recepientId":"124","amount":123}
+    {"senderId":"201","recepientId":"202","amount":20001}
+    {"senderId":"205","recepientId":"206","amount":20005}
+
+
+
+    ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-consumer.sh \
+              --topic deposit-money-topic \
+              --bootstrap-server localhost:9092 \
+              --from-beginning \
+              --consumer-property isolation.level=read_committed
+    {"senderId":"123","recepientId":"124","amount":123}
+    {"senderId":"201","recepientId":"202","amount":20001}
+    {"senderId":"205","recepientId":"206","amount":20005}
+
+10. Database Table:
+
+    Login to h2 database: http://localhost:9502/h2-console
+    JDBC URL: jdbc:h2:mem:transferdb
+    User Name: ashish
+    password: ashish
+
+
+    SELECT * FROM TRANSFERS
+
+
+    AMOUNT  	RECEPIENT_ID  	SENDER_ID  	TRANSFER_ID
+    20001.00	202	201	4c056d9d-4d8a-4b4d-bd32-804c6787c5c7
+    20005.00	206	205	fde887b7-f883-4671-a028-1b5e4cf43159
+
+
+11. Now, you can stop the Mock service and hit the request from postman on step 5. Exception will be thrown and message won't be sent to both the topics.

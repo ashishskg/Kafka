@@ -1,0 +1,78 @@
+######################################################################
+##############              PRODUCER                ##################
+######################################################################
+
+# Send Message to Topic my-topic
+kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic  
+>Hello World2
+
+# Send Message in key value pari to my-topic
+
+ kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic --property "parse.key=true" --property "key.separator=:"
+>Fruit:Apple
+>PL:Java
+
+
+######################################################################
+##############              CONSUMER                ##################
+######################################################################
+# Consume the messages from Topic my-topic
+kafka % ./bin/kafka-console-consumer.sh --topic my-topic --from-beginning --bootstrap-server localhost:9092
+Hello World!
+Terry
+Apple
+Java
+
+######################################################################
+##############    PRODUCE & CONSUME ONLY NEW MESSAGE #################
+######################################################################
+
+#Produce the messages 
+kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic --property "parse.key=true" --property "key.separator=:"
+>Hi:879989
+>
+
+# Consumes
+
+ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-consumer.sh --topic my-topic  --bootstrap-server localhost:9092 
+879989
+
+######################################################################
+##############    PRODUCE & CONSUME THE MESSAGE WITH KEY VALUE PAIR ##
+######################################################################
+# Produce the messages
+ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic --property "parse.key=true" --property "key.separator=:"
+>veg: Cauliflower
+
+# Consume the messages
+
+MacBook-Pro kafka % ./bin/kafka-console-consumer.sh --topic my-topic --from-beginning --bootstrap-server localhost:9092 --property print.key=true --property print.value=true                  
+null	Hello World!
+firstName	Terry
+Fruit	Apple
+PL	Java
+Hi	879989
+
+######################################################################
+##############    PRODUCE & CONSUME Consume Message In Order ##
+######################################################################
+
+# Produce
+
+MacBook-Pro kafka % ./bin/kafka-topics.sh --create --topic messages-order --partitions 3 --replication-factor 3 --bootstrap-server localhost:9092
+Created topic messages-order.
+ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-producer.sh --topic messages-order --bootstrap-server localhost:9092 --property "parse:key=true" --property "key.separator=:"
+>hi:hello
+>1: Message 1
+>1: Message 2
+>2: Hello 1
+>2: Hello 3 
+
+#Consume
+
+-MacBook-Pro kafka % ./bin/kafka-console-consumer.sh --topic messages-order --bootstrap-server localhost:9092 --from-beginning --property print.value=true print.key=true
+hi:hello
+1: Message 1
+1: Message 2
+2: Hello 1
+2: Hello 3

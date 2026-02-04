@@ -1,0 +1,56 @@
+When a Kafka producer sends a record, it is sent to a Kafka broker. The broker writes the record to a topic, and within that topic the record is stored in a specific partition.
+
+Replication, Leader, and Followers
+If your Kafka cluster uses a replication factor > 1, each partition is replicated across multiple brokers:
+
+One broker is elected as the leader for that partition.
+Other brokers host replicas as followers (replicas).
+The producer writes to the leader. The leader then replicates the record to follower replicas.
+Why acknowledgements matter
+After the leader receives and writes the record, Kafka sends an acknowledgement (ack) back to the producer based on the producer’s configuration.
+
+If the leader acknowledges too early (before followers replicate) and then crashes permanently, the record may be lost. To improve durability, you can configure the producer to wait for acknowledgements from more replicas.
+
+Producer acks settings (durability vs latency)
+acks=1 (Leader only)
+The producer waits for an acknowledgement from the leader broker only.
+Pros: good latency / throughput
+Cons: record may be lost if the leader fails before followers replicate
+This is commonly the default and is a practical balance between speed and safety.
+
+acks=all (All in-sync replicas)
+The producer waits for acknowledgements from all in-sync replicas (ISR).
+Pros: strongest durability; data is not lost as long as at least one ISR remains alive
+Cons: higher latency; slower writes because the producer waits for multiple brokers
+Spring Kafka example property:
+
+spring.kafka.producer.acks=all
+acks=0 (No acknowledgements)
+The producer does not wait for any acknowledgement.
+Pros: fastest possible producer performance
+Cons: no guarantee the broker received or stored the record (possible silent loss)
+Typical use case: high-volume, low-criticality data like frequent GPS location updates where occasional loss is acceptable.
+
+Does acks=all get slower as you add more brokers?
+Yes and no.
+
+No, because the producer does not wait for every broker in the cluster.
+It waits only for the in-sync replicas (ISR) for the partition being written to.
+The number of replicas involved depends on the topic’s replication factor, which is set when the topic is created.
+
+Controlling how many replicas must acknowledge: min.insync.replicas
+Kafka also lets you configure a minimum number of replicas that must be in-sync to accept writes durably:
+
+min.insync.replicas=2 (example)
+This means:
+
+Even if a partition has (say) 5 replicas, Kafka can be configured so that only 2 in-sync replicas must successfully store the record for the write to be considered valid (when using acks=all).
+Effect:
+
+Faster than waiting for all replicas
+Still reliable, because at least the configured number of brokers have persisted the record
+Key takeaway
+Use producer acknowledgement settings (acks) together with replication and ISR-related settings (like min.insync.replicas) to tune the trade-off between:
+
+Latency/throughput
+Durability and data-loss risk

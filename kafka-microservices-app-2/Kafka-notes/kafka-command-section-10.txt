@@ -1,0 +1,7 @@
+# Consume the message from topic product created event topic
+./bin/kafka-console-consumer.sh --topic product-created-events-topic --bootstrap-server localhost:9092
+
+# For Error Handling, Try to send error message to product created event topic
+kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic product-created-events-topic --property "parse.key=true" --property "key.separator=:"
+>1:{aererer}
+

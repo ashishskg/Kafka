@@ -1,0 +1,60 @@
+Step 1: Refer the Project structure in this file kafka-section-19-project-structure.txt
+
+Step 2: Go to parent module spring project /Users/ashish/Desktop/kafka-saga-pattern/kafka-saga-pattern-spring-boot
+ and run 'docker compose up' where the 'docker-compose.yml' presents.
+
+Step 3: Build the project in order. Common -> Order Service -> Product Service -> -> Payment -> Credit Card service with 'mvn clean install'
+
+
+Step 4: Run the project in order Order service -> Product service applic -> Payment ->  Credit card processor service
+
+Step 5: Hit the request from postman
+
+    a) Create product by calling the below curl and after prodcut created pass the reponse product id to the order service curl.
+        curl --location 'http://localhost:8081/products' \
+        --header 'Content-Type: application/json' \
+        --data '{
+            "name": "iphone 6",
+            "price": 1200,
+            "quantity": 10
+        }'
+
+    b)   
+        curl --location 'http://localhost:8080/orders' \
+        --header 'Content-Type: application/json' \
+        --data '{
+            "productId": "cdc89100-828b-4ffe-b16d-6187a6152626",
+            "productQuantity": 1,
+            "customerId": "cdc89100-828b-4ffe-b16d-6187a6152000"
+        }'  
+
+    c)  Get the order history by passing the order id from b) response
+            curl --location --request GET 'http://localhost:8081/orders/c1b920bd-2e89-461a-9573-024c606c602e/history' \
+            --header 'Content-Type: text/plain' \
+            --data '{
+                "productId": "6d75b683-fa36-406f-9c7b-f5d863394007",
+                "productQuantity": 1,
+                "customerId": "6d75b683-fa36-406f-9c7b-f5d863390000"
+            }'    
+
+Step 4: Run the consumer 
+
+./bin/kafka-console-consumer.sh --topic orders-events-topic --bootstrap-server localhost:9092 --from-beginning   
+
+    {"orderId":"d9b07d9f-f76e-4f64-8606-4cf84342593d","customerId":"cdc89100-828b-4ffe-b16d-6187a6152000","productId":"cdc89100-828b-4ffe-b16d-6187a6152626","productQuantity":1}
+    {"orderId":"b236c34c-183c-4f43-aeec-3127105d90f2","customerId":"ef2cfad1-8ab9-470b-855e-8720e9a00000","productId":"ef2cfad1-8ab9-470b-855e-8720e9a4fd70","productQuantity":1}
+    {"orderId":"c1b920bd-2e89-461a-9573-024c606c602e","customerId":"6d75b683-fa36-406f-9c7b-f5d863390000","productId":"6d75b683-fa36-406f-9c7b-f5d863394007","productQuantity":1}
+
+./bin/kafka-console-consumer.sh --topic products-commands-topic --bootstrap-server localhost:9092 --from-beginning
+  
+    {"productId":"cdc89100-828b-4ffe-b16d-6187a6152626","productQuantity":1,"orderId":"d9b07d9f-f76e-4f64-8606-4cf84342593d"}
+    {"productId":"ef2cfad1-8ab9-470b-855e-8720e9a4fd70","productQuantity":1,"orderId":"b236c34c-183c-4f43-aeec-3127105d90f2"}
+    {"productId":"6d75b683-fa36-406f-9c7b-f5d863394007","productQuantity":1,"orderId":"c1b920bd-2e89-461a-9573-024c606c602e"}
+
+./bin/kafka-console-consumer.sh --topic products-events-topic --bootstrap-server localhost:9092 --from-beginning
+
+{"orderId":"9f11e628-ac23-4d1f-846e-c8aaf9311b3b","productId":"92b9dee8-dceb-4926-b3e4-d649c37db41e","productPrice":1200.00,"productQuantity":1}
+{"productId":"92b9dee8-dceb-4926-b3e4-d649c37db41e","orderId":"3f6055ee-a3c1-4440-a6d3-4ec17b0e4b2d","productQuantity":11}
+
+
+./bin/kafka-console-consumer.sh --topic payments-commands-topic --bootstrap-server localhost:9092 --from-beginning

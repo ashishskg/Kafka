@@ -1,0 +1,26 @@
+# Start all 3 Kafka server from 1-kafka-notes.txt file
+
+# Create New Topic with Minimum Insync Replica
+kafka % ./bin/kafka-topics.sh --create --topic insync-topic --partitions 3 --replication-factor 3 --bootstrap-server localhost:9092 --config min.insync.replicas=2
+Created topic insync-topic.
+
+# Describe the topic
+kafka % ./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092 
+
+Topic: insync-topic	TopicId: ppZvNx-8SE2pQ7Cy_QWaBQ	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=2,segment.bytes=1073741824
+	Topic: insync-topic	Partition: 0	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1	Elr: 	LastKnownElr: 
+	Topic: insync-topic	Partition: 1	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+	Topic: insync-topic	Partition: 2	Leader: 1	Replicas: 1,2,3	Isr: 1,2,3	Elr: 	LastKnownElr: 
+
+#  Change the min insync replica to 1 for existing topic
+kafka % ./bin/kafka-configs.sh --bootstrap-server localhost:9092 --alter --entity-type topics --entity-name insync-topic --add-config min.insync.replicas=1
+Completed updating config for topic insync-topic.
+
+# Describe the Topic (Now insync topic replica value is 1)
+kafka % ./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092
+Topic: insync-topic	TopicId: ppZvNx-8SE2pQ7Cy_QWaBQ	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=1,segment.bytes=1073741824
+	Topic: insync-topic	Partition: 0	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1	Elr: 	LastKnownElr: 
+	Topic: insync-topic	Partition: 1	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+	Topic: insync-topic	Partition: 2	Leader: 1	Replicas: 1,2,3	Isr: 1,2,3	Elr: 	LastKnownElr: 
+
+

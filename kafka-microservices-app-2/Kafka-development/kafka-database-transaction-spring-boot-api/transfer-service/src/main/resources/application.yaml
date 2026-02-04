@@ -1,0 +1,45 @@
+server:
+  port: 9502
+
+spring:
+  application:
+    name: transfer-service
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+      acks: all
+      transaction-id-prefix: transfer-service-${random.value}-
+
+      properties:
+        delivery.timeout.ms: 120000
+        linger.ms: 0
+        request.timeout.ms: 30000
+
+        max.in.flight.requests.per.connection: 5
+        enable.idempotence: true
+
+
+withdraw-money-topic: withdraw-money-topic
+deposit-money-topic: deposit-money-topic
+
+logging:
+  level:
+    org.springframework.kafka.transaction.KafkaTransactionManager: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa.JpaTransactionManager: DEBUG
+    org.apache.kafka.clients.producer.internals.TransactionManager: DEBUG
+
+---
+spring:
+  datasource:
+    username: ashish
+    password: ashish
+    url: jdbc:h2:mem:transferdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true

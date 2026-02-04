@@ -1,0 +1,181 @@
+---------------------------------------
+# Section 2 Run the single Kafka server
+---------------------------------------
+
+I) To start single Kafka server
+---------------------------------------
+
+# To Generate cluster UUID
+bin/kafka-storage.sh random-uuid 
+
+# To format Kafka storage (Pass the cluster uuid)
+bin/kafka-storage.sh format \ 
+  --config config/server.properties \ 
+  --cluster-id i5obkIXcSdKLvoyyYnp6-Q \ 
+  --standalone 
+ 
+ # To start the kafka server
+ bin/kafka-server-start.sh config/server.properties 
+ 
+
+II) To Start the Multiple Kafka Server
+---------------------------------------
+
+a) Step 1: Create configuration file. Copy the config/server.properties 3 times and rename to server-1.properties, server2-properties & server3.properties.
+
+Copy server.properties three times: 
+
+config/server-1.properties 
+config/server-2.properties 
+config/server-3.properties 
+
+b) Step 2: Modify all 3 server properties as following
+
+server-1.properties
+-----------------
+
+node.id=1  
+listeners=PLAINTEXT://:9092,CONTROLLER://:9093 
+controller.quorum.bootstrap.servers=localhost:9093,localhost:9095,localhost:9097 
+advertised.listeners=PLAINTEXT://localhost:9092,CONTROLLER://localhost:9093 
+log.dirs=/tmp/server-1/kraft-combined-logs 
+
+server-2.properties
+-----------------
+node.id=2 
+listeners=PLAINTEXT://:9094,CONTROLLER://:9095 
+controller.quorum.bootstrap.servers=localhost:9093,localhost:9095,localhost:9097 
+advertised.listeners=PLAINTEXT://localhost:9094,CONTROLLER://localhost:9095 
+log.dirs=/tmp/server-2/kraft-combined-logs 
+
+server-3.properties
+-------------------
+
+node.id=3 
+listeners=PLAINTEXT://:9096,CONTROLLER://:9097 
+controller.quorum.bootstrap.servers=localhost:9093,localhost:9095,localhost:9097 
+advertised.listeners=PLAINTEXT://localhost:9096,CONTROLLER://localhost:9097 
+log.dirs=/tmp/server-3/kraft-combined-logs 
+
+c) Run these command to  generate UUID
+
+./bin/kafka-server-stop.sh\n
+rm -rf /tmp/server-1 /tmp/server-2 /tmp/server-3\n
+export CLUSTER_ID=$(./bin/kafka-storage.sh random-uuid)\n
+echo $CLUSTER_ID\n
+DIR1=$(./bin/kafka-storage.sh random-uuid)
+DIR2=$(./bin/kafka-storage.sh random-uuid)\n
+DIR3=$(./bin/kafka-storage.sh random-uuid)\n
+DIR1=R0k8aW5cS3y4j3mR8F2Yyw\nDIR2=3Zr1K5w6QmC4Jb5F9xX2Gg\nDIR3=F8KxQ4Tn2M1wR9sC6yZp0Q\n
+DIR1=$(./bin/kafka-storage.sh random-uuid)
+DIR2=$(./bin/kafka-storage.sh random-uuid)\n
+DIR3=$(./bin/kafka-storage.sh random-uuid)\n
+echo $DIR1 $DIR2 $DIR3
+
+ d) To  Format the storage directories for each broker with the cluster ID and initial controller quorum
+./bin/kafka-storage.sh format \\n  -t "$CLUSTER_ID" \\n  -c config/server-1.properties \\n  --initial-controllers "1@localhost:9093:$DIR1,2@localhost:9095:$DIR2,3@localhost:9097:$DIR3"\n
+./bin/kafka-storage.sh format \\n  -t "$CLUSTER_ID" \\n  -c config/server-2.properties \\n  --initial-controllers "1@localhost:9093:$DIR1,2@localhost:9095:$DIR2,3@localhost:9097:$DIR3"\n
+./bin/kafka-storage.sh format \\n  -t "$CLUSTER_ID" \\n  -c config/server-3.properties \\n  --initial-controllers "1@localhost:9093:$DIR1,2@localhost:9095:$DIR2,3@localhost:9097:$DIR3"\n
+ 
+ e)  Start the servers
+./bin/kafka-server-start.sh config/server-1.properties
+./bin/kafka-server-start.sh config/server-2.properties
+./bin/kafka-server-start.sh config/server-3.properties
+
+f) Create Topics
+
+./bin/kafka-metadata-quorum.sh --bootstrap-controller localhost:9093 describe --status
+# Create topic1, and topic2
+% ./bin/kafka-topics.sh --create --topic topic1 --partitions 3  --replication-factor 3 --bootstrap-server localhost:9092,localhost:9094
+# Created topic topic1.
+% ./bin/kafka-topics.sh --create --topic topic2 --partitions 3  --replication-factor 3 --bootstrap-server localhost:9092,localhost:9094
+# Created topic topic2.
+
+g) List topics
+% ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+# topic1
+# topic2
+
+h) Describe topics
+% ./bin/kafka-topics.sh --describe --bootstrap-server localhost:9092
+# Topic: topic1	TopicId: OqqzcQC0TRmIoeM5wNBodQ	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=1,segment.bytes=1073741824
+# 	Topic: topic1	Partition: 0	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+# 	Topic: topic1	Partition: 1	Leader: 1	Replicas: 1,2,3	Isr: 1,2,3	Elr: 	LastKnownElr: 
+# 	Topic: topic1	Partition: 2	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1	Elr: 	LastKnownElr: 
+# Topic: topic2	TopicId: 0bv6XEOsQzilEIbagAOeyg	PartitionCount: 3	ReplicationFactor: 3	Configs: min.insync.replicas=1,segment.bytes=1073741824
+# 	Topic: topic2	Partition: 0	Leader: 1	Replicas: 1,2,3	Isr: 1,2,3	Elr: 	LastKnownElr: 
+# 	Topic: topic2	Partition: 1	Leader: 2	Replicas: 2,3,1	Isr: 2,3,1	Elr: 	LastKnownElr: 
+# 	Topic: topic2	Partition: 2	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2	Elr: 	LastKnownElr: 
+
+i) Delete topic2
+kafka % ./bin/kafka-topics.sh --delete --topic topic2 --bootstrap-server localhost:9092
+kafka % ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092             
+# topic1
+
+j) Producer
+
+# Send Message to Topic my-topic
+kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic  
+>Hello World2
+
+# Send Message in key value pari to my-topic
+
+ kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic --property "parse.key=true" --property "key.separator=:"
+>Fruit:Apple
+>PL:Java
+
+k) Consumer
+
+# Consume the messages from Topic my-topic
+kafka % ./bin/kafka-console-consumer.sh --topic my-topic --from-beginning --bootstrap-server localhost:9092
+Hello World!
+Terry
+Apple
+Java
+
+l) To produce and consume only new messages
+
+#Produce the messages 
+kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic --property "parse.key=true" --property "key.separator=:"
+>Hi:879989
+>
+
+# Consumes
+
+ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-consumer.sh --topic my-topic  --bootstrap-server localhost:9092 
+879989
+
+m) PRODUCE & CONSUME THE MESSAGE WITH KEY VALUE PAIR
+
+# Produce the messages
+ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-producer.sh --bootstrap-server localhost:9092,localhost:9094 --topic my-topic --property "parse.key=true" --property "key.separator=:"
+>veg: Cauliflower
+
+# Consume the messages
+
+MacBook-Pro kafka % ./bin/kafka-console-consumer.sh --topic my-topic --from-beginning --bootstrap-server localhost:9092 --property print.key=true --property print.value=true                  
+null	Hello World!
+firstName	Terry
+Fruit	Apple
+PL	Java
+Hi	879989
+
+n) PRODUCE & CONSUME Consume Message In Order
+
+MacBook-Pro kafka % ./bin/kafka-topics.sh --create --topic messages-order --partitions 3 --replication-factor 3 --bootstrap-server localhost:9092
+Created topic messages-order.
+ashish@ashishs-MacBook-Pro kafka % ./bin/kafka-console-producer.sh --topic messages-order --bootstrap-server localhost:9092 --property "parse:key=true" --property "key.separator=:"
+>hi:hello
+>1: Message 1
+>1: Message 2
+>2: Hello 1
+>2: Hello 3 
+
+#Consume
+
+-MacBook-Pro kafka % ./bin/kafka-console-consumer.sh --topic messages-order --bootstrap-server localhost:9092 --from-beginning --property print.value=true print.key=true
+hi:hello
+1: Message 1
+1: Message 2
+2: Hello 1
+2: Hello 3

@@ -1,0 +1,9 @@
+# Once the spring boot application created product-created-events-topic then describe this topic if it's created
+MacBook-Pro kafka % ./bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic product-created-events-topic
+
+
+# Run the Consumer command to consume the message from topic
+# From postman, create the Product and check
+MacBook-Pro kafka % ./bin/kafka-console-consumer.sh --topic product-created-events-topic --bootstrap-server localhost:9092 --property print.key=true
+
+c9e963ab-f2ea-4e13-88e5-ce58f88ac4a9	{"product":{"price":1500,"productId":"c9e963ab-f2ea-4e13-88e5-ce58f88ac4a9","quantity":15,"title":"iPhone 14"}}
